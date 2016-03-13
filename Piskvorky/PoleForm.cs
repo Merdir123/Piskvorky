@@ -53,7 +53,7 @@ namespace Piskvorky
                     }
                     else
                     {
-                        AI.Stredni(znaky, ref x, ref y);
+                        AI.Stredni(znaky, 0,  ref x, ref y);
                         pole[x, y].PerformClick();
                     }
                     
@@ -120,11 +120,13 @@ namespace Piskvorky
             {
                 tahTextBox1.Visible = false;
                 while (rezimHry == 2)
-                {
-                AI.Lehky(znaky, ref x, ref y);
-                pole[x, y].PerformClick();
-                var t = Task.Delay(1000);
-                t.Wait();
+                {                   
+                    AI.Lehky(znaky, ref x, ref y);
+                    pole[x, y].PerformClick();
+                    //var t = Task.Delay(1000);
+                    //t.Wait();
+                    
+                    //Thread.Sleep(1000);
                 }
 
             }
