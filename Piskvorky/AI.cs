@@ -40,42 +40,7 @@ namespace Piskvorky
         }
         public void Stredni(string[,] znaky, ref int x, ref int y)
         {
-
-            vyplneno = false;
-            while (vyplneno == false)
-            {
-                for (int i = 0; i < PoleForm.velikostPole - 4; i++)
-                {
-                    for (int j = 0; j < PoleForm.velikostPole; j++)
-                    {
-                        if (znaky[i + 1, j] != "X" & znaky[i + 2, j] != "X" & znaky[i + 3, j] != "X" & znaky[i + 4, j] != "X")
-                        {
-                            if (5 > hodnota & znaky[i, j] == "")
-                            {
-                                hodnota = 5;
-                                x = i;
-                                y = j;
-                            }
-                         vyplneno = true;                            
-                        }
-                        if (znaky[i + 1, j] != "O" & znaky[i + 2, j] != "O" & znaky[i + 3, j] != "O" & znaky[i + 4, j] != "X")
-                        {
-                            if (4 > hodnota & znaky[i, j] == "")
-                            {
-                                hodnota = 4;
-                                x = i;
-                                y = j;
-                            }
-                            vyplneno = true;
-                        }
-                        
-                    }
-                }
-                
-
-
-            }
-
+                                
         }
     }
 }
