@@ -13,10 +13,13 @@ namespace Piskvorky
         Random random = new Random();
         int randomX;
         int randomY;
+        int max = 0;
+        int x = 0;
+        int y = 0;
         int hrac = 0;
-        int smerx = 0;
-        int smery = 0;
-        int smerz = 0;
+        int nahoda;
+    
+        
         int[,] hodnoty = new int[PoleForm.velikostPole, PoleForm.velikostPole];
 
         //string[,] znaky;
@@ -43,6 +46,7 @@ namespace Piskvorky
         }
         public void Stredni(string[,] znaky, int hrac, ref int x, ref int y)
         {
+            max = 0;
             this.hrac = hrac;
             for (int i = 0; i < PoleForm.velikostPole; i++)
             {
@@ -51,7 +55,9 @@ namespace Piskvorky
                     if (znaky[i ,j] == "")
                     {
                         //metoda Ohodnoceni
+                        Ohodnoceni(znaky, i, j);
                         //vybrání nejlepšího políčka
+                        
                         //ref x, y
                     }
                 }
@@ -62,7 +68,9 @@ namespace Piskvorky
             //projede pole a každému políčku přiřadí hodnotu podle toho kdo je na tahu
             switch (hrac)
             {
-                default:
+                case 0:
+                    hodnoty[x, y] = 0;
+                    
                     if (x <= PoleForm.velikostPole - 5)
                     {
                         for (int i = 0; i < 4; i++)
@@ -85,7 +93,7 @@ namespace Piskvorky
                         }
                     }
 
-                    if (x >= 5)
+                    if (y >= 5)
                     {
                         for (int i = 0; i < 4; i++)
                         {
@@ -96,7 +104,7 @@ namespace Piskvorky
                         }
                     }
 
-                    if (x >= PoleForm.velikostPole - 5)
+                    if (y <= PoleForm.velikostPole - 5)
                     {
                         for (int i = 0; i < 4; i++)
                         {
@@ -107,8 +115,160 @@ namespace Piskvorky
                         }
                     }
 
+                    if (x <= PoleForm.velikostPole - 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x + i, y] == "X")
+                            {
+                                hodnoty[x, y] += 2;
+                            }
+                        }
+                    }
+
+                    if (x >= 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x - i, y] == "X")
+                            {
+                                hodnoty[x, y] += 2;
+                            }
+                        }
+                    }
+
+                    if (y >= 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x, y - i] == "X")
+                            {
+                                hodnoty[x, y] += 2;
+                            }
+                        }
+                    }
+
+                    if (y <= PoleForm.velikostPole - 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x, y + i] == "X")
+                            {
+                                hodnoty[x, y] += 2;
+                            }
+                        }
+                    }
+
+                    if (x <= PoleForm.velikostPole - 5 & y <= PoleForm.velikostPole - 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x + i, y + 1] == "X")
+                            {
+                                hodnoty[x, y] += 2;
+                            }
+                        }
+                    }
+
+                    if (x >= 5 & y >= 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x - i, y - 1] == "X")
+                            {
+                                hodnoty[x, y] += 2;
+                            }
+                        }
+                    }
+
+                    if (x <= PoleForm.velikostPole - 5 & y >= 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x + 1, y - i] == "X")
+                            {
+                                hodnoty[x, y] += 2;
+                            }
+                        }
+                    }
+
+                    if (y <= PoleForm.velikostPole - 5 & x >= 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x - 1, y + i] == "X")
+                            {
+                                hodnoty[x, y] += 2;
+                            }
+                        }
+                    }
+
+                    if (x <= PoleForm.velikostPole - 5 & y <= PoleForm.velikostPole - 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x + i, y + 1] == "O")
+                            {
+                                hodnoty[x, y] += 1;
+                            }
+                        }
+                    }
+
+                    if (x >= 5 & y >= 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x - i, y - 1] == "O")
+                            {
+                                hodnoty[x, y] += 1;
+                            }
+                        }
+                    }
+
+                    if (x <= PoleForm.velikostPole - 5 & y >= 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x + 1, y - i] == "O")
+                            {
+                                hodnoty[x, y] += 1;
+                            }
+                        }
+                    }
+
+                    if (y <= PoleForm.velikostPole - 5 & x >= 5)
+                    {
+                        for (int i = 0; i < 4; i++)
+                        {
+                            if (znaky[x - 1, y + i] == "O")
+                            {
+                                hodnoty[x, y] += 1;
+                            }
+                        }
+                    }
+
+                    if (hodnoty[x, y] > max)
+                    {
+                        max = hodnoty[x, y];
+                        this.x = x;
+                        this.y = y;
+                    }
+                    if (hodnoty[x, y] == max)
+                    {
+                        nahoda = random.Next(0, 1);
+                        if (nahoda == 0)
+                        {
+                            max = hodnoty[x, y];
+                            this.x = x;
+                            this.y = y;
+                        }
+                    }
+
                     break;
                 case 1:
+
+
+
                     break;
             }
         }
