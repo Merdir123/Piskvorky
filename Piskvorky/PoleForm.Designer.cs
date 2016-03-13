@@ -60,14 +60,14 @@
             // nováHraToolStripMenuItem
             // 
             this.nováHraToolStripMenuItem.Name = "nováHraToolStripMenuItem";
-            this.nováHraToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.nováHraToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.nováHraToolStripMenuItem.Text = "Nová Hra";
             this.nováHraToolStripMenuItem.Click += new System.EventHandler(this.nováHraToolStripMenuItem_Click);
             // 
             // konecToolStripMenuItem1
             // 
             this.konecToolStripMenuItem1.Name = "konecToolStripMenuItem1";
-            this.konecToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.konecToolStripMenuItem1.Size = new System.Drawing.Size(124, 22);
             this.konecToolStripMenuItem1.Text = "Konec";
             this.konecToolStripMenuItem1.Click += new System.EventHandler(this.konecToolStripMenuItem1_Click);
             // 

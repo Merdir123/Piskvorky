@@ -20,6 +20,7 @@ namespace Piskvorky
         public String[,] znaky;
         public static int pomer = 1;
         public static int rezimHry = 0;
+        public static int inteligence = 0;
         AI AI = new AI();
         int x = 0;
         int y = 0;
@@ -41,11 +42,21 @@ namespace Piskvorky
             {
                 button.Text = "X";
                 tahTextBox1.Text = "Na tahu je hráč O";
+                
                 if (rezimHry == 1)
                 {
                     tah = false;
-                    AI.Lehky(znaky, ref x, ref y);
-                    pole[x, y].PerformClick();
+                    if (inteligence == 0)
+                    {
+                        AI.Lehky(znaky, ref x, ref y);
+                        pole[x, y].PerformClick();
+                    }
+                    else
+                    {
+                        AI.Stredni(znaky, ref x, ref y);
+                        pole[x, y].PerformClick();
+                    }
+                    
                     tah = true;
                     //tahTextBox1.Text = "Na tahu je hráč X";
                 }

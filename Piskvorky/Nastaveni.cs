@@ -64,5 +64,17 @@ namespace Piskvorky
                 PoleForm.pomer = 2;
             }
         }
+
+        private void AI1ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AI1ComboBox.SelectedIndex == 0)
+            {
+                PoleForm.inteligence = 0;
+            }
+            if (AI1ComboBox.SelectedIndex == 1)
+            {
+                PoleForm.inteligence = 1;
+            }
+        }
     }
 }
