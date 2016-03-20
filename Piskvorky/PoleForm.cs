@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Threading;
 
 
+
 namespace Piskvorky
 {
     public partial class PoleForm : Form
@@ -20,12 +21,12 @@ namespace Piskvorky
         public String[,] znaky;
         public static int pomer = 1;
         public static int rezimHry = 0;
-        public static int inteligence = 0;
+        public static int inteligence1 = 0;
+        public static int inteligence2 = 0;
         AI AI = new AI();
         int x = 0;
         int y = 0;
         
-
         public PoleForm()
         {
             InitializeComponent();
@@ -42,18 +43,20 @@ namespace Piskvorky
             {
                 button.Text = "X";
                 tahTextBox1.Text = "Na tahu je hráč O";
+                Naplneni();
+                Kontrola();
                 
                 if (rezimHry == 1)
                 {
                     tah = false;
-                    if (inteligence == 0)
+                    if (inteligence1 == 0)
                     {
                         AI.Lehky(znaky, ref x, ref y);
                         pole[x, y].PerformClick();
                     }
                     else
                     {
-                        AI.Stredni(znaky, 0,  ref x, ref y);
+                        AI.Stredni(znaky, "O", "X", ref x, ref y);
                         pole[x, y].PerformClick();
                     }
                     
@@ -118,20 +121,28 @@ namespace Piskvorky
             
             if (rezimHry == 2)
             {
+                t1.Enabled = true;
+                
+                t1.Start();
                 tahTextBox1.Visible = false;
                 while (rezimHry == 2)
-                {                   
-                    AI.Lehky(znaky, ref x, ref y);
-                    pole[x, y].PerformClick();
+                {
+
+                    
+
+
+                    
+
+
                     //var t = Task.Delay(1000);
                     //t.Wait();
-                    
-                    //Thread.Sleep(1000);
+
+                   //Thread.Sleep(1000);
                 }
 
             }
 
-
+        
 
 
 
@@ -290,7 +301,39 @@ namespace Piskvorky
             
 
         }
-        
+
+        private void t1_Tick(object sender, EventArgs e)
+        {
+            
+            if (inteligence1 == 0)
+            {
+                AI.Lehky(znaky, ref x, ref y);
+            }
+            else AI.Stredni(znaky, "X", "O", ref x, ref y);
+            pole[x, y].PerformClick();
+            Naplneni();
+            Kontrola();
+            t1.Stop();
+            t1.Enabled = false;
+            t2.Enabled = true;
+            t2.Start();
+        }
+
+        private void t2_Tick(object sender, EventArgs e)
+        {
+            if (inteligence2 == 0)
+            {
+                AI.Lehky(znaky, ref x, ref y);
+            }
+            else AI.Stredni(znaky, "O", "X", ref x, ref y);
+            pole[x, y].PerformClick();
+            Naplneni();
+            Kontrola();
+            t2.Stop();
+            t2.Enabled = false;
+            t1.Enabled = true;
+            t1.Start();
+        }
     }
 
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.hraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nováHraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -35,6 +36,8 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.nastaveniToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tahTextBox1 = new System.Windows.Forms.Label();
+            this.t1 = new System.Windows.Forms.Timer(this.components);
+            this.t2 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -97,6 +100,16 @@
             this.tahTextBox1.Size = new System.Drawing.Size(0, 13);
             this.tahTextBox1.TabIndex = 13;
             // 
+            // t1
+            // 
+            this.t1.Interval = 1000;
+            this.t1.Tick += new System.EventHandler(this.t1_Tick);
+            // 
+            // t2
+            // 
+            this.t2.Interval = 1000;
+            this.t2.Tick += new System.EventHandler(this.t2_Tick);
+            // 
             // PoleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -124,6 +137,8 @@
         private System.Windows.Forms.ToolStripMenuItem konecToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem nastaveniToolStripMenuItem;
         private System.Windows.Forms.Label tahTextBox1;
+        private System.Windows.Forms.Timer t1;
+        private System.Windows.Forms.Timer t2;
     }
 }
 

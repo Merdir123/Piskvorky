@@ -50,6 +50,7 @@
             this.AI2ComboBox.Size = new System.Drawing.Size(107, 21);
             this.AI2ComboBox.TabIndex = 16;
             this.AI2ComboBox.Visible = false;
+            this.AI2ComboBox.SelectedIndexChanged += new System.EventHandler(this.AI2ComboBox_SelectedIndexChanged);
             // 
             // AI1ComboBox
             // 

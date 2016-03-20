@@ -69,11 +69,23 @@ namespace Piskvorky
         {
             if (AI1ComboBox.SelectedIndex == 0)
             {
-                PoleForm.inteligence = 0;
+                PoleForm.inteligence1 = 0;
             }
             if (AI1ComboBox.SelectedIndex == 1)
             {
-                PoleForm.inteligence = 1;
+                PoleForm.inteligence1 = 1;
+            }
+        }
+
+        private void AI2ComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (AI1ComboBox.SelectedIndex == 0)
+            {
+                PoleForm.inteligence2 = 0;
+            }
+            if (AI1ComboBox.SelectedIndex == 1)
+            {
+                PoleForm.inteligence2 = 1;
             }
         }
     }
