@@ -36,6 +36,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.PoleComboBox1 = new System.Windows.Forms.ComboBox();
+            this.potvrditButton = new System.Windows.Forms.Button();
+            this.rychlostLabel = new System.Windows.Forms.Label();
+            this.rychlostComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // AI2ComboBox
@@ -43,7 +46,7 @@
             this.AI2ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AI2ComboBox.FormattingEnabled = true;
             this.AI2ComboBox.Items.AddRange(new object[] {
-            "Jednoduchá",
+            "Náhodný",
             "Normální"});
             this.AI2ComboBox.Location = new System.Drawing.Point(165, 196);
             this.AI2ComboBox.Name = "AI2ComboBox";
@@ -57,7 +60,7 @@
             this.AI1ComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.AI1ComboBox.FormattingEnabled = true;
             this.AI1ComboBox.Items.AddRange(new object[] {
-            "Jednoduchá",
+            "Náhodný",
             "Normální"});
             this.AI1ComboBox.Location = new System.Drawing.Point(165, 141);
             this.AI1ComboBox.Name = "AI1ComboBox";
@@ -135,11 +138,52 @@
             this.PoleComboBox1.TabIndex = 9;
             this.PoleComboBox1.SelectedIndexChanged += new System.EventHandler(this.PoleComboBox1_SelectedIndexChanged);
             // 
+            // potvrditButton
+            // 
+            this.potvrditButton.BackColor = System.Drawing.Color.Lime;
+            this.potvrditButton.Font = new System.Drawing.Font("Comic Sans MS", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.potvrditButton.Location = new System.Drawing.Point(84, 283);
+            this.potvrditButton.Name = "potvrditButton";
+            this.potvrditButton.Size = new System.Drawing.Size(115, 43);
+            this.potvrditButton.TabIndex = 17;
+            this.potvrditButton.Text = "POTVRDIT";
+            this.potvrditButton.UseVisualStyleBackColor = false;
+            this.potvrditButton.Click += new System.EventHandler(this.potvrditButton_Click);
+            // 
+            // rychlostLabel
+            // 
+            this.rychlostLabel.AutoSize = true;
+            this.rychlostLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.rychlostLabel.Location = new System.Drawing.Point(12, 242);
+            this.rychlostLabel.Name = "rychlostLabel";
+            this.rychlostLabel.Size = new System.Drawing.Size(95, 20);
+            this.rychlostLabel.TabIndex = 18;
+            this.rychlostLabel.Text = "Rychlost hry";
+            this.rychlostLabel.Visible = false;
+            // 
+            // rychlostComboBox
+            // 
+            this.rychlostComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.rychlostComboBox.FormattingEnabled = true;
+            this.rychlostComboBox.Items.AddRange(new object[] {
+            "Okamžitá",
+            "1 sekunda",
+            "2 sekundy"});
+            this.rychlostComboBox.Location = new System.Drawing.Point(165, 241);
+            this.rychlostComboBox.Name = "rychlostComboBox";
+            this.rychlostComboBox.Size = new System.Drawing.Size(107, 21);
+            this.rychlostComboBox.TabIndex = 19;
+            this.rychlostComboBox.Visible = false;
+            this.rychlostComboBox.SelectedIndexChanged += new System.EventHandler(this.rychlostComboBox_SelectedIndexChanged);
+            // 
             // Nastaveni
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(284, 354);
+            this.Controls.Add(this.rychlostComboBox);
+            this.Controls.Add(this.rychlostLabel);
+            this.Controls.Add(this.potvrditButton);
             this.Controls.Add(this.AI2ComboBox);
             this.Controls.Add(this.AI1ComboBox);
             this.Controls.Add(this.AI2Label);
@@ -165,5 +209,8 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox PoleComboBox1;
+        private System.Windows.Forms.Button potvrditButton;
+        private System.Windows.Forms.Label rychlostLabel;
+        private System.Windows.Forms.ComboBox rychlostComboBox;
     }
 }

@@ -11,10 +11,13 @@ using System.Threading;
 
 
 
+
 namespace Piskvorky
 {
     public partial class PoleForm : Form
     {
+        
+
         public bool tah = true;
         public static int velikostPole = 10;
         public Button[,] pole;
@@ -26,6 +29,8 @@ namespace Piskvorky
         AI AI = new AI();
         int x = 0;
         int y = 0;
+        bool mys = true;
+        public static int rychlost = 1000;
         
         public PoleForm()
         {
@@ -33,55 +38,60 @@ namespace Piskvorky
             
         }
 
-        
+
 
         protected void kliknuti(object sender, EventArgs e)
         {
-            Button button = sender as Button;
+            Button button = sender as Button;   //metoda vyhodnocující, jestli se na tlačítko zapíše X nebo O
+            if (mys == true)
+            {
 
-            if (tah == true & button.Text == "")
-            {
-                button.Text = "X";
-                tahTextBox1.Text = "Na tahu je hráč O";
-                Naplneni();
-                Kontrola();
-                
-                if (rezimHry == 1)
+
+                if (tah == true & button.Text == "")
                 {
-                    tah = false;
-                    if (inteligence1 == 0)
+                    button.Text = "X";
+                    tahTextBox1.Text = "Na tahu je hráč O";
+                    Naplneni();
+                    Kontrola();
+
+                    if (rezimHry == 1)
                     {
-                        AI.Lehky(znaky, ref x, ref y);
-                        pole[x, y].PerformClick();
+                        tah = false;
+                        if (inteligence1 == 0)
+                        {
+                            AI.Lehky(znaky, ref x, ref y);
+                            pole[x, y].PerformClick();
+                        }
+                        else
+                        {
+                            AI.Stredni(znaky, "O", "X", ref x, ref y);
+                            pole[x, y].PerformClick();
+                        }
+
+                        tah = true;
+                        
                     }
-                    else
-                    {
-                        AI.Stredni(znaky, "O", "X", ref x, ref y);
-                        pole[x, y].PerformClick();
-                    }
+                    else tah = false;
+                    Naplneni();
+                    Kontrola();
                     
-                    tah = true;
-                    //tahTextBox1.Text = "Na tahu je hráč X";
                 }
-                else tah = false;
-                Naplneni();
-                Kontrola();
-                //tahTextBox1.Text = "Na tahu je hráč X";
-            }
-            if (tah == false & button.Text == "")
-            {
-                button.Text = "O";
-                tah = true;
-                tahTextBox1.Text = "Na tahu je hráč X";
-                Naplneni();
-                Kontrola();  
+                if (tah == false & button.Text == "")
+                {
+                    button.Text = "O";
+                    tah = true;
+                    tahTextBox1.Text = "Na tahu je hráč X";
+                    Naplneni();
+                    Kontrola();
+                }
             }
         }
-        public void VytvorPole()
-        {
+        
+        public void VytvorPole()                    //metoda na vytvoření hracího pole
+        {       
             pole = new Button[velikostPole, velikostPole];
             znaky = new String[velikostPole, velikostPole];
-            tahTextBox1.Text = "Na tahu je hráč X";
+            tahTextBox1.Text = "Na tahu je hráč X"; //zpráva oznamující, kdo je na tahu
             for (int i = 0; i < velikostPole; i++)
             {
                 for (int j = 0; j < velikostPole; j++)
@@ -108,10 +118,10 @@ namespace Piskvorky
 
         private void konecToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.Application.Exit();
+            Application.Exit();
         }
 
-        private void nováHraToolStripMenuItem_Click(object sender, EventArgs e)
+        private void nováHraToolStripMenuItem_Click(object sender, EventArgs e) //metoda, která zahájí hru
         {
             
             VytvorPole();
@@ -119,39 +129,21 @@ namespace Piskvorky
             nastaveniToolStripMenuItem.Enabled = false;
             nováHraToolStripMenuItem.Enabled = false;
             
-            if (rezimHry == 2)
+            if (rezimHry == 2)      // v případě, že hrají dva počítače proti sobě
             {
+                t1.Interval = rychlost;
+                t2.Interval = rychlost;
+                mys = false;        //zabraňuje klikání myší během hry dvou počítačů
                 t1.Enabled = true;
                 
                 t1.Start();
                 tahTextBox1.Visible = false;
-                while (rezimHry == 2)
-                {
-
-                    
-
-
-                    
-
-
-                    //var t = Task.Delay(1000);
-                    //t.Wait();
-
-                   //Thread.Sleep(1000);
-                }
+                
 
             }
 
-        
-
-
-
-
-
-            //MessageBox.Show("stisknuto: " + x.ToString() + ", " + y.ToString());
-
         }
-        private void Naplneni()
+        private void Naplneni()     //naplní textové pole, se kterým se pracuje ve třídě AI
         {
             for (int i = 0; i < velikostPole; i++)
             {
@@ -161,11 +153,8 @@ namespace Piskvorky
                 }
             }
         }
-        private void Hra()
-        {
-           
-        }
-        private bool Remiza()
+        
+        private bool Remiza()       //vyhodnocení možné remízy
         {
             for (int i = 0; i < velikostPole - 4; i++)
             {
@@ -228,73 +217,130 @@ namespace Piskvorky
         }
         private void Kontrola()
         {
-            if (Remiza() == true)
+            if (Remiza() == true)       //v případě remízy vypíše, že došlo k remíze a ukončí program
             {
                 MessageBox.Show("Remíza!");
-                System.Windows.Forms.Application.Exit();
+                t1.Stop();
+                t2.Stop();
+                Application.Exit();
             }
+
+            //zde se řeší každý směr - v případě výhry jí program oznámí, a ukončí aplikaci
+
             for (int i = 0; i < velikostPole - 4; i++)
             {
+                //pro řádek
                 for (int j = 0; j < velikostPole; j++)
                 {
                     if (znaky[i, j] == "X" & znaky[i + 1, j] == "X" & znaky[i + 2, j] == "X" & znaky[i + 3, j] == "X" & znaky[i + 4, j] == "X")
                     {
+                        t1.Stop();
+                        t2.Stop();
+                        for (int o = 0; o < 5; o++)
+                        {
+                            pole[i + o, j].BackColor = Color.Lime;
+                        }
                         MessageBox.Show("Vyhrává hráč X!");
-                        System.Windows.Forms.Application.Exit();
+                        Application.Exit();
                     }
                     if (znaky[i, j] == "O" & znaky[i + 1, j] == "O" & znaky[i + 2, j] == "O" & znaky[i + 3, j] == "O" & znaky[i + 4, j] == "O")
                     {
+                        t1.Stop();
+                        t2.Stop();
+                        for (int o = 0; o < 5; o++)
+                        {
+                            pole[i + o, j].BackColor = Color.Lime;
+                        }
                         MessageBox.Show("Vyhrává hráč O!");
-                        System.Windows.Forms.Application.Exit();
+                        Application.Exit();
                     }
                     
                 }
             }
             for (int i = 0; i < velikostPole; i++)
             {
+                //pro sloupec
                 for (int j = 0; j < velikostPole - 4; j++)
                 {
                     if (znaky[i, j] == "X" & znaky[i, j + 1] == "X" & znaky[i, j + 2] == "X" & znaky[i, j + 3] == "X" & znaky[i, j + 4] == "X")
                     {
+                        t1.Stop();
+                        t2.Stop();
+                        for (int o = 0; o < 5; o++)
+                        {
+                            pole[i, j + o].BackColor = Color.Lime;
+                        }
                         MessageBox.Show("Vyhrává hráč X!");
-                        System.Windows.Forms.Application.Exit();
+                        Application.Exit();
                     }
                     if (znaky[i, j] == "O" & znaky[i, j + 1] == "O" & znaky[i, j + 2] == "O" & znaky[i, j + 3] == "O" & znaky[i, j + 4] == "O")
                     {
+                        t1.Stop();
+                        t2.Stop();
+                        for (int o = 0; o < 5; o++)
+                        {
+                            pole[i, j + o].BackColor = Color.Lime;
+                        }
                         MessageBox.Show("Vyhrává hráč O!");
-                        System.Windows.Forms.Application.Exit();
+                        Application.Exit();
                     }
                 }
             }
             for (int i = 0; i < velikostPole - 4; i++)
             {
+                //pro diagonálu
                 for (int j = 0; j < velikostPole - 4; j++)
                 {
                     if (znaky[i, j] == "X" & znaky[i + 1, j + 1] == "X" & znaky[i + 2, j + 2] == "X" & znaky[i + 3, j + 3] == "X" & znaky[i + 4, j + 4] == "X")
                     {
+                        t1.Stop();
+                        t2.Stop();
+                        for (int o = 0; o < 5; o++)
+                        {
+                            pole[i + o, j + o].BackColor = Color.Lime;
+                        }
                         MessageBox.Show("Vyhrává hráč X!");
-                        System.Windows.Forms.Application.Exit();
+                        Application.Exit();
                     }
                     if (znaky[i, j] == "O" & znaky[i + 1, j + 1] == "O" & znaky[i + 2, j + 2] == "O" & znaky[i + 3, j + 3] == "O" & znaky[i + 4, j + 4] == "O")
                     {
+                        t1.Stop();
+                        t2.Stop();
+                        for (int o = 0; o < 5; o++)
+                        {
+                            pole[i + o, j + o].BackColor = Color.Lime;
+                        }
                         MessageBox.Show("Vyhrává hráč O!");
-                        System.Windows.Forms.Application.Exit();
+                        Application.Exit();
                     }
                 }
             }
             for (int i = 0; i < velikostPole - 4; i++)
             {
+                //opačná diagonála
                 for (int j = 4; j < velikostPole; j++)
                 {
                     if (znaky[i, j] == "X" & znaky[i + 1, j - 1] == "X" & znaky[i + 2, j - 2] == "X" & znaky[i + 3, j - 3] == "X" & znaky[i + 4, j - 4] == "X")
                     {
+                        t1.Stop();
+                        t2.Stop();
+                        for (int o = 0; o < 5; o++)
+                        {
+                            pole[i + o, j - o].BackColor = Color.Lime;
+                        }
                         MessageBox.Show("Vyhrává hráč X!");
-                        System.Windows.Forms.Application.Exit();
+                        Application.Exit();
                     }
                     if (znaky[i, j] == "O" & znaky[i + 1, j - 1] == "O" & znaky[i + 2, j - 2] == "O" & znaky[i + 3, j - 3] == "O" & znaky[i + 4, j - 4] == "O")
                     {
+                        t1.Stop();
+                        t2.Stop();
+                        for (int o = 0; o < 5; o++)
+                        {
+                            pole[i + o, j - o].BackColor = Color.Lime;
+                        }
                         MessageBox.Show("Vyhrává hráč O!");
-                        System.Windows.Forms.Application.Exit();
+                        Application.Exit();
                     }
                 }
             }
@@ -304,13 +350,15 @@ namespace Piskvorky
 
         private void t1_Tick(object sender, EventArgs e)
         {
-            
+            // časovače pro hru dvou hráčů, aby se počítače střídali po vteřině
             if (inteligence1 == 0)
             {
                 AI.Lehky(znaky, ref x, ref y);
             }
             else AI.Stredni(znaky, "X", "O", ref x, ref y);
+            mys = true;
             pole[x, y].PerformClick();
+            mys = false;
             Naplneni();
             Kontrola();
             t1.Stop();
@@ -321,12 +369,15 @@ namespace Piskvorky
 
         private void t2_Tick(object sender, EventArgs e)
         {
+            
             if (inteligence2 == 0)
             {
                 AI.Lehky(znaky, ref x, ref y);
             }
             else AI.Stredni(znaky, "O", "X", ref x, ref y);
+            mys = true;
             pole[x, y].PerformClick();
+            mys = false;
             Naplneni();
             Kontrola();
             t2.Stop();
