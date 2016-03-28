@@ -50,6 +50,7 @@ namespace Piskvorky
                 if (tah == true & button.Text == "")
                 {
                     button.Text = "X";
+                    button.ForeColor = Color.Blue;
                     tahTextBox1.Text = "Na tahu je hráč O";
                     Naplneni();
                     Kontrola();
@@ -79,6 +80,7 @@ namespace Piskvorky
                 if (tah == false & button.Text == "")
                 {
                     button.Text = "O";
+                    button.ForeColor = Color.Red;
                     tah = true;
                     tahTextBox1.Text = "Na tahu je hráč X";
                     Naplneni();
