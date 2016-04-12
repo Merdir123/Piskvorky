@@ -7,6 +7,9 @@ using System.Windows.Forms;
 
 namespace Piskvorky
 {
+    /// <summary>
+    /// V této třídě se nachází uvažování všech úrovní počítače.
+    /// </summary>
     class AI
     {
         //potřebné proměnné
@@ -22,6 +25,9 @@ namespace Piskvorky
         {
 
         }
+        /// <summary>
+        /// Tato metoda vrátí souřadnice pro nejlepší tah Lehkého protivníka.
+        /// </summary>
         public void Lehky(string[,] znaky, ref int x, ref int y) //náhodný hráč
         {
             vyplneno = false;
@@ -39,12 +45,19 @@ namespace Piskvorky
 
             }
         }
+        /// <summary>
+        /// Tato metoda vrátí nejlepší souřadnice pro středně těžkého počítače.
+        /// </summary>
         public void Stredni(string[,] znaky, string hrac, string protivnik, ref int nejX, ref int nejY)     //středně inteligentní počítač
         {
 
             int hracX = 0, hracY = 0, protivnikX = 0, protivnikY = 0, hracMax = 0, protivnikMax = 0;
             bool hracOhraniceni = false, protivnikOhraniceni = false; //ohraničení určuje, jestli je po určitém počtu určitého symbolu ve směru druhý znak, který by zabraňoval postupu
+            
+            
             // zde se určují priority, podle kterých počítač bude vybírat nejlepší pole
+
+
 
             ZjistiNejlepsiPole(znaky, ref hracX, ref hracY, ref hracMax, hrac, ref hracOhraniceni); //metoda pro nalezení nejvhodnějšího políčka
             if (hracMax == 5) // hráč může okamžitě vyhrát
@@ -53,7 +66,25 @@ namespace Piskvorky
                 nejY = hracY;
                 return;
             }
+
+
             ZjistiNejlepsiPole(znaky, ref protivnikX, ref protivnikY, ref protivnikMax, protivnik, ref protivnikOhraniceni);
+
+            if (hracMax == 1 && protivnikMax == 1) // v případě, že počítač začíná, umístí symbol doprostřed
+            {
+                if (PoleForm.velikostPole == 10)
+                {
+                    nejX = 4;
+                    nejY = 4;
+                    return;
+                }
+                if (PoleForm.velikostPole == 20)
+                {
+                    nejX = 9;
+                    nejY = 9;
+                    return;
+                }
+            }
             if (protivnikMax == 5) //hráč může zabránit výhře nepřítele, pokud má nepřítel 4 neohraničené, je jedno kam zapíše svůj symbol
             {
                 nejX = protivnikX;
@@ -114,30 +145,19 @@ namespace Piskvorky
                 return;
             }
 
-            if (hracMax == 1 && protivnikMax == 1) // v případě, že počítač začíná, umístí symbol doprostřed
-            {
-                if (PoleForm.velikostPole == 10)
-                {
-                    nejX = 4;
-                    nejY = 4;
-                    return;
-                }
-                if (PoleForm.velikostPole == 20)
-                {
-                    nejX = 9;
-                    nejY = 9;
-                    return;
-                }
-            }
+            
+            
             else
             {
-                nejX = hracX; //pro případ,že by nebyla splňena žádná podmínka, upřednostní hráčův nejlepší tah
+                nejX = hracX; //pro případ, že by nebyla splňena žádná podmínka, upřednostní hráčův nejlepší tah
                 nejY = hracY;
                 return;
             }
         }
-        
 
+        /// <summary>
+        /// Metoda pro zjištění nejlepšího pole
+        /// </summary>
         static void ZjistiNejlepsiPole(string[,] znaky, ref int nejX, ref int nejY, ref int max, string hrac, ref bool ohraniceni) 
         {
             nejX = 0;
@@ -199,6 +219,9 @@ namespace Piskvorky
                 }
             }
         }
+        /// <summary>
+        /// Metoda, která vrátí souřadnice nejlepšího políčka v určitém směru.
+        /// </summary>
         static void ZjistiNejPoleProSmer(int smer, string[,] iznaky, int poziceX, int poziceY, ref int nejX, ref int nejY, ref int max, ref bool ohraniceni, string hrac)
         {
             bool mistniOhraniceni = false;  //lokální proměnné

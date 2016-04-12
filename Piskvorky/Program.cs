@@ -6,6 +6,9 @@ using System.Windows.Forms;
 
 namespace Piskvorky
 {
+    /// <summary>
+    /// Tato třída spustí program se kterým dále pracuje třída PoleForm.
+    /// </summary>
     static class Program
     {
         /// <summary>

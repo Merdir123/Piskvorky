@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace Piskvorky
 {
+    /// <summary>
+    /// Zde se nastavuje okno Nastavení a jeho reakce na změnu indexů.
+    /// </summary>
     public partial class Nastaveni : Form
     {
         PoleForm poleForm = new PoleForm();

@@ -14,14 +14,17 @@ using System.Threading;
 
 namespace Piskvorky
 {
+    /// <summary>
+    /// Toto je třída ve které se nachází kostra celého programu. Pracuje s hlavním oknem a hracím polem.
+    /// </summary>
     public partial class PoleForm : Form
     {
         
 
-        public bool tah = true;
-        public static int velikostPole = 10;
-        public Button[,] pole;
-        public String[,] znaky;
+        public bool tah = true;                 //kdo je na tahu
+        public static int velikostPole = 10;    //velikost hracího pole
+        public Button[,] pole;                  //hrací pole typu Button
+        public String[,] znaky;                 //hrací pole v typu String
         public static int pomer = 1;
         public static int rezimHry = 0;
         public static int inteligence1 = 0;
@@ -39,15 +42,17 @@ namespace Piskvorky
         }
 
 
-
+        /// <summary>
+        /// Metoda ve které se vyhodnocuje kliknutí na určité políčko.
+        /// </summary>
         protected void kliknuti(object sender, EventArgs e)
         {
-            Button button = sender as Button;   //metoda vyhodnocující, jestli se na tlačítko zapíše X nebo O
+            Button button = sender as Button;   
             if (mys == true)
             {
 
 
-                if (tah == true & button.Text == "")
+                if (tah == true & button.Text == "")    //v případě že je na tahu člověk
                 {
                     button.Text = "X";
                     button.ForeColor = Color.Blue;
@@ -55,10 +60,10 @@ namespace Piskvorky
                     Naplneni();
                     Kontrola();
 
-                    if (rezimHry == 1)
+                    if (rezimHry == 1)      //režim hry je hráč proti počítači a na tahu je počítač
                     {
                         tah = false;
-                        if (inteligence1 == 0)
+                        if (inteligence1 == 0)      //řeší se obtížnost počítače
                         {
                             AI.Lehky(znaky, ref x, ref y);
                             pole[x, y].PerformClick();
@@ -77,7 +82,7 @@ namespace Piskvorky
                     Kontrola();
                     
                 }
-                if (tah == false & button.Text == "")
+                if (tah == false & button.Text == "")   //na tahu je druhý lidský hráč
                 {
                     button.Text = "O";
                     button.ForeColor = Color.Red;
@@ -88,8 +93,11 @@ namespace Piskvorky
                 }
             }
         }
-        
-        public void VytvorPole()                    //metoda na vytvoření hracího pole
+
+        /// <summary>
+        /// Metoda na vytvoření hracího plánu.
+        /// </summary>
+        public void VytvorPole()                    
         {       
             pole = new Button[velikostPole, velikostPole];
             znaky = new String[velikostPole, velikostPole];
@@ -123,11 +131,14 @@ namespace Piskvorky
             Application.Exit();
         }
 
-        private void nováHraToolStripMenuItem_Click(object sender, EventArgs e) //metoda, která zahájí hru
+        /// <summary>
+        /// Metoda zahajující hru.
+        /// </summary>
+        private void nováHraToolStripMenuItem_Click(object sender, EventArgs e) 
         {
             
             VytvorPole();
-            Naplneni();
+            Naplneni();   
             nastaveniToolStripMenuItem.Enabled = false;
             nováHraToolStripMenuItem.Enabled = false;
             
@@ -145,7 +156,10 @@ namespace Piskvorky
             }
 
         }
-        private void Naplneni()     //naplní textové pole, se kterým se pracuje ve třídě AI
+        /// <summary>
+        /// Metoda která podle hracího plánu naplní stejně velké stringové pole pro lehčí vypočítávání souřadnic ve třídě AI.
+        /// </summary>
+        private void Naplneni()     
         {
             for (int i = 0; i < velikostPole; i++)
             {
@@ -155,8 +169,11 @@ namespace Piskvorky
                 }
             }
         }
-        
-        private bool Remiza()       //vyhodnocení možné remízy
+
+        /// <summary>
+        /// Vyhodnocení remízy.
+        /// </summary>
+        private bool Remiza()       
         {
             for (int i = 0; i < velikostPole - 4; i++)
             {
@@ -217,13 +234,17 @@ namespace Piskvorky
             }
             return true;
         }
+
+        /// <summary>
+        /// Zde se ověřuje, zda došlo k výhře některého hráče. V kladném případě oznámí výhru a ukončí program.
+        /// </summary>
         private void Kontrola()
         {
             if (Remiza() == true)       //v případě remízy vypíše, že došlo k remíze a ukončí program
-            {
-                MessageBox.Show("Remíza!");
-                t1.Stop();
+            {                
+                t1.Stop();                
                 t2.Stop();
+                MessageBox.Show("Remíza!");
                 Application.Exit();
             }
 
@@ -350,6 +371,9 @@ namespace Piskvorky
 
         }
 
+        /// <summary>
+        /// Časovače určující ryhlost hry dvou počítačů.
+        /// </summary>
         private void t1_Tick(object sender, EventArgs e)
         {
             // časovače pro hru dvou hráčů, aby se počítače střídali po vteřině
