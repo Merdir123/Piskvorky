@@ -19,22 +19,51 @@ namespace Piskvorky
     /// </summary>
     public partial class PoleForm : Form
     {
-        
 
-        public bool tah = true;                 //kdo je na tahu
-        public static int velikostPole = 10;    //velikost hracího pole
-        public Button[,] pole;                  //hrací pole typu Button
-        public String[,] znaky;                 //hrací pole v typu String
+        /// <summary>
+        /// Určuje kdo je na tahu.
+        /// </summary>
+        public bool tah = true;
+        /// <summary>
+        /// Proměnná určující velikost hracího plánu.
+        /// </summary>                 
+        public static int velikostPole = 10;
+        /// <summary>
+        /// Hrací pole typu Button
+        /// </summary>
+        public Button[,] pole;
+        /// <summary>
+        /// Hrací pole typu String.
+        /// </summary>
+        public String[,] znaky;
+        /// <summary>
+        /// Používá se při dělění velikosti pole podle zvoleného nastavení.
+        /// </summary>
         public static int pomer = 1;
+        /// <summary>
+        /// Zvolený režim hry.
+        /// </summary>
         public static int rezimHry = 0;
+        /// <summary>
+        /// Inteligence prvního počítače.
+        /// </summary>
         public static int inteligence1 = 0;
+        /// <summary>
+        /// Inteligence druhého počítače.
+        /// </summary>
         public static int inteligence2 = 0;
         AI AI = new AI();
         int x = 0;
         int y = 0;
         bool mys = true;
+        /// <summary>
+        /// Rychlost hry dvou počítačů.
+        /// </summary>
         public static int rychlost = 1000;
-        
+
+        /// <summary>
+        /// Konstruktor, který je nutný ke správnému fungování programu.
+        /// </summary>
         public PoleForm()
         {
             InitializeComponent();
